@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $roles = ['Admin', 'Author', 'viewer'];
+        $roles = ['Admin', 'Author'];
 
         foreach($roles as $role)
         {

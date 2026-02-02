@@ -6,10 +6,14 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
+    public function __construct()
+{
+    $this->authorizeResource(Post::class, 'post');
+}
+
     /**
      * Display a listing of the resource.
      */
