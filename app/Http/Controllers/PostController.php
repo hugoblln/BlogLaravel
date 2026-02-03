@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('Posts/show', compact('post'));
+        $comments = $post->comments;
+
+        return view('Posts/show', compact('post', 'comments'));
     }
 
     /**
