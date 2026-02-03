@@ -18,11 +18,17 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
+        $search = $request->input('q');
 
-        return view('Posts/index', compact('posts'));
+        if ($search) {
+            $posts = Post::search($search)->paginate(10);
+        } else {
+            $posts = Post::latest()->paginate(10);
+        }
+
+        return view('Posts/index', compact('posts', 'search'));
     }
 
     /**
@@ -86,4 +92,5 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with('success', 'Post supprimer avec succès');
     }
+
 }

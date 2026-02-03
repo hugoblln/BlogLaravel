@@ -48,6 +48,14 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    meilisearch:
+        image: getmeili/meilisearch:latest
+        ports:
+            - "7700:7700"
+        environment:
+            MEILI_MASTER_KEY: masterKey
+        networks:
+            - sail        
 networks:
     sail:
         driver: bridge
