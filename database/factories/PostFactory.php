@@ -29,7 +29,7 @@ class PostFactory extends Factory
         return $this->afterCreating(function ($post)
         {
             $tags = Tag::inRandomOrder()->take(rand(1,3))->pluck('id');
-            $post->Tags()->attach($tags);
+            $post->tags()->attach($tags);
 
         });
     }
