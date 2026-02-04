@@ -38,16 +38,25 @@
                         {{ $post->content }}
                     </p>
 
+                      <div class="flex flex-wrap gap-2 mt-3">
+                        @foreach ($post->tags as $tag)
+                         <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                         {{ $tag->name }}
+                         </span>
+                         @endforeach
+                    </div>
+
                     <div class="flex items-center justify-between mt-4">
                         <span class="text-sm text-gray-500">
                             ✍️ {{ $post->user->name }}
                         </span>
 
+                      
+
                         <a href="{{ route('posts.show', $post) }}"
                            class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
                             Lire la suite →
                         </a>
-
                         <a href="{{route('posts.edit', $post)}}"
                         class="text-sm font-medium text-blue-600 hover:text-blue-800">
                             modifier
@@ -55,7 +64,7 @@
                         <form method="POST" action="{{route('posts.destroy', $post)}}">
                             @csrf
                              @method('DELETE')
-                            <button type="submit">supprimer</button>
+                            <button class="text-red-600" type="submit">supprimer</button>
                         </form>
                     </div>
                 </div>

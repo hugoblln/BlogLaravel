@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,5 +22,15 @@ class PostFactory extends Factory
             'content' => fake()->text(),
             'user_id' => 1
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function ($post)
+        {
+            $tags = Tag::inRandomOrder()->take(rand(1,3))->pluck('id');
+            $post->Tags()->attach($tags);
+
+        });
     }
 }

@@ -1,3 +1,5 @@
+@props(['post' => null])
+
 <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-md">
     <form method="POST" action="{{ $post ? route('posts.update', $post) : route('posts.store') }}" class="space-y-6">
         @csrf
