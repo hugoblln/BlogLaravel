@@ -17,6 +17,14 @@
             {{ $post->title }}
         </h1>
 
+           <div class="flex flex-wrap gap-2 mt-3">
+                        @foreach ($post->tags as $tag)
+                         <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                         {{ $tag->name }}
+                         </span>
+                         @endforeach
+                    </div>
+
         {{-- Auteur --}}
         <div class="flex items-center text-sm text-gray-500 mb-8">
             <span>
@@ -28,6 +36,18 @@
         <div class="prose prose-lg max-w-none text-gray-800">
             {{ $post->content }}
         </div>
+
+       <form action="{{ route('post.togglelike', $post) }}" method="POST" class="inline">
+    @csrf
+    <button 
+        type="submit"
+        class="text-xl transition transform hover:scale-110
+               {{ $isLiked ? 'text-red-600' : 'text-gray-400 hover:text-red-500' }}"
+        aria-label="Like"
+    >
+        {{ $isLiked ? '❤️' : '🤍' }}
+    </button>
+</form>
 
     </article>
 

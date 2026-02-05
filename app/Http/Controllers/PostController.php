@@ -60,7 +60,9 @@ class PostController extends Controller
     {
         $comments = $post->comments;
 
-        return view('Posts/show', compact('post', 'comments'));
+        $isLiked = $post->likedBy();
+
+        return view('Posts/show', compact('post', 'comments', 'isLiked'));
     }
 
     /**
@@ -91,6 +93,13 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index')->with('success', 'Post supprimer avec succès');
+    }
+
+      public function toggleLike(Post $post)
+    {
+        $post->likes()->toggle(Auth::id());
+
+        return redirect()->route('posts.show', $post)->with('success','favoris mise à jour');
     }
 
 }
