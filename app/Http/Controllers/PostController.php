@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -44,11 +45,14 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-       $data = $request->validated();
 
-       $data['user_id'] = Auth::id();
+        $data = $request->validated();
 
-        Post::create($data);
+        $data['user_id'] = Auth::id();
+
+        $post = Post::create($data);
+
+        $this->syncTags($post, $request);
 
        return redirect()->route('posts.index')->with('success', 'Post créer avec succès');
     }
@@ -82,6 +86,8 @@ class PostController extends Controller
 
         $post->update($newData);
 
+         $this->syncTags($post, $request);
+
         return redirect()->route('posts.index')->with('success', 'Post modifié avec succès');
     }
 
@@ -100,6 +106,20 @@ class PostController extends Controller
         $post->likes()->toggle(Auth::id());
 
         return redirect()->route('posts.show', $post)->with('success','favoris mise à jour');
+    }
+
+    public function syncTags(Post $post, Request $request)
+    {
+        $tags = $request->input('tags');
+
+        $tagsV2 = str_replace(',', ' ', $tags);
+
+        $tagsV3 = preg_split('/\s+/', trim($tagsV2));
+
+        $addTags = array_map( fn($i) => Tag::firstOrCreate(['name' => $i]) , $tagsV3);
+
+        $post->tags()->sync(collect($addTags)->pluck('id')->toArray());
+
     }
 
 }

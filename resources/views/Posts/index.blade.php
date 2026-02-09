@@ -6,6 +6,10 @@
             Derniers articles
         </h1>
 
+        <div>
+            <a href="{{route('posts.create')}}">Créer un nouveau poste</a>
+        </div>
+
     <div class="max-w-md mx-auto mt-6 p-4 bg-white rounded-lg shadow-md">
         <form action="{{ route('posts.index') }}" method="GET" class="flex items-center space-x-2">
             <input 

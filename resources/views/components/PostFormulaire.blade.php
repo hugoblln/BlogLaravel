@@ -1,4 +1,5 @@
 @props(['post' => null])
+@vite('resources/js/app.js')
 
 <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-md">
     <form method="POST" action="{{ $post ? route('posts.update', $post) : route('posts.store') }}" class="space-y-6">
@@ -21,7 +22,22 @@
                 value="{{$post?->title}}"
             >
         </div>
-
+          <div>
+            <label for="tags" class="block text-sm font-medium text-gray-700">
+                Tags
+            </label>
+            <input
+                type="text"
+                name="tags"
+                id="tags"
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm
+                       focus:border-indigo-500 focus:ring-indigo-500"
+                placeholder="laravel php developpement..."
+                value="{{ $post ? $post->tags->pluck('name')->implode(' ') : '' }}"
+            >
+            <button class="bg-indigo-600 rounded-lg p-2" id="tagButton" type="button">+</button>
+        </div>
+    
         <div>
             <label for="content" class="block text-sm font-medium text-gray-700">
                 Contenu
